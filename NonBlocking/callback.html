@@ -1,0 +1,50 @@
+<!-- // memanggil kembali kode yang ada di program async, biasanya dibuat dalam bentuk function dan akan dieksekusi ketika proses async selesai
+// contoh async method, setTimeout(handler/callback, time) digunakan untuk menjalankan proses async sekali dalam waktu
+// setInterval(handler, time), digunakan untuk menjalankan proses async secara periodik dalam waktu tertentu
+// setTimeout(function(){
+//    do something   // dipanggil sekali
+// }, 5000)
+
+// setInterval(function(){
+//    do something   // dipanggil setiap 5000 
+// }, 5000) -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Set Timeout</title>
+    <script>
+        function callback() {
+            console.log("Hello World");
+        }
+
+        // function buttonClick() { // syncronous
+        //     callback()
+        //     console.log("Success Click Button");
+        // }
+
+        function buttonClick(){ // async
+            setTimeout(()=>{
+                callback()
+            },500) // hanya dirun sekali
+            console.log("Success Click Button")
+        }
+
+        // function buttonClick(){ // async
+        //     setTimeout(callback(),500)
+        //     console.log("Success Click Button")
+        // }
+
+        // function buttonClick(){ // async
+        //     setInterval(()=>{
+        //         callback()
+        //     },500) akan terus dirunning setiap 500 milisecond sekali
+        //     console.log("Success Click Button")
+        // }
+    </script>
+</head>
+<body>
+<button onclick="buttonClick()">Click Me</button>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a href="https://www.contoh.com" id="link">Klik saya</a>
+    <form id="myForm">
+      <input type="text" name="username" />
+      <input type="submit" value="Submit" />
+    </form>
+
+    <script>
+      var link = document.getElementById("link");
+      link.addEventListener("click", function (event) {
+        event.preventDefault(); // Mencegah tindakan bawaan tautan (navigasi)
+        alert("Tautan tidak akan membuka halaman baru.");
+      });
+
+      var form = document.getElementById("myForm");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Mencegah pengiriman formulir
+        alert("Formulir tidak akan dikirim.");
+      });
+    </script>
+  </body>
+</html>

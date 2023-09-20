@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="judul2">Delete Saya</h2>
+    <script>
+        //add
+        var judul = document.createElement("h1")
+        judul.textContent = "Belajar Javascript"
+        document.body.append(judul)
+
+        //delete
+        var h2 = document.getElementById("judul2")
+        h2.remove()
+        console.log("element sudah dihapus",h2)
+    </script>
+</body>
+</html>

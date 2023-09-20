@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <!-- Kalo kita mau pilih element berdasarkan nama tag atau attribute class, biasanya akan ada lebih dari satu element yang dipilih. Nah, element yang akan  -->
+    <!-- terpilih itu bakalan jadi sebuah array, karena kita memilih sekumpulan element.  -->
+    
+    <p class="paragraph">lorem:20</p>
+    <p class="paragraph">lorem:20</p>
+    <p class="paragraph">lorem:20</p>
+    <p class="paragraph">lorem:20</p>
+    <script>
+      document.write("Hello World");
+      document.write("<h2>Saya sedang belajar javascript</h2>");
+
+      // DOM Selector
+      //   document.getElementById() berdasarkan id
+      //   document.getElementByName()  atribut name
+      //   document.getElementsByClassName()  attribut class
+      //   document.getElementByTagName()  nama tag
+      //   document.getElementByTagNameNS()  nama tag
+      //   document.querySelector()  berdasarkan query
+      //   document.querySelectorAll()  query
+
+      //   implementasi
+      //mengakses element tutorial
+      var tutorial = document.getElementById("app");
+      // mengisi teks
+      tutorial.innerText = "Tutorial Javascript";
+      tutorial.style.backgroundColor = "gold";
+      tutorial.style.padding = "10px";
+
+    var paragraf = document.getElementsByClassName("paragraph")
+    paragraf[0].innerText = "Hallo dunia"
+    setInterval(function(){
+        paragraf[0].style.color="red"
+        paragraf[1].style.color="blue"
+        paragraf[2].style.color="green"
+        
+        setTimeout(function(){
+            paragraf[0].style.color = "black"
+            paragraf[1].style.color = "black"
+            paragraf[2].style.color = "black"
+        }, 500)
+    }, 1000)
+    </script>
+  </body>
+</html>

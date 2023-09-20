@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- id -->
+    <div id="myDiv">This is a div with an ID</div>
+
+    <!-- name -->
+    <input type="text" name="username" value="john sena" />
+    <input type="text" name="username1" value="John" />
+    <input type="text" name="username1" value="Doe" />
+    <input type="text" name="username1" value="Smith" />
+    <input type="text" name="email" value="john@example.com" />
+
+    <!-- class -->
+    <p class="highlighted">This paragraph has a class</p>
+
+    <!-- tag name -->
+    <h1>Heading 1</h1>
+    <h2>Heading 2</h2>
+    <p>Paragraf 1</p>
+    <p>Paragraf 2</p>
+
+    <!-- query selector -->
+    <div class="container">
+      <p>First Paragraph</p>
+      <p>First Paragraph</p>
+    </div>
+    <div class="container">
+      <p>Second Paragraph</p>
+    </div>
+
+    <!-- seleqtorAll -->
+    <ul>
+      <li class="item">Item 1</li>
+      <li class="item">Item 2</li>
+      <li class="item">Item 3</li>
+      <li class="item">Item 4</li>
+    </ul>
+
+    <script>
+      // Tambahkan event listener untuk "DOMContentLoaded"
+      document.addEventListener("DOMContentLoaded", function () {
+        // id
+        var elementById = document.getElementById("myDiv");
+        elementById.innerHTML = "Updated using getElementById";
+
+        // name
+        var getElementByName = document.getElementsByName("username");
+        getElementByName[0].value = "Updated using getElementByName";
+
+        // name (multiple elements with the same name)
+        var elementsByNames = document.getElementsByName("username1");
+        // Mengakses elemen pertama dalam kumpulan
+        elementsByNames[0].value = "Updated 1st element";
+
+        // Mengakses elemen kedua dalam kumpulan
+        elementsByNames[1].value = "Updated 2nd element";
+
+        // Mengakses elemen ketiga dalam kumpulan
+        elementsByNames[2].value = "Updated 3rd element";
+
+        // class
+        var elementByClass = document.getElementsByClassName("highlighted")[0];
+        elementByClass.innerHTML = "Updated using getElementByClass";
+
+        // tag name
+        var elementsByTagName = document.getElementsByTagName("p");
+        elementsByTagName[2].innerText = "Updated using getElementByTagName";
+
+        // query selector
+        var elementByQuery = document.querySelector(".container");
+        elementByQuery.innerText = "Updated using query Selector";
+        var secondParagraph = document.querySelector(
+          ".container:nth-child(2) p"
+        );
+        secondParagraph.innerText = "Updated Second Paragraph";
+
+        // var secondParagraph = document.querySelector(
+        //   ".container p:nth-child(2)"
+        // );
+        // secondParagraph.innerText = "Updated Second Paragraph";
+
+        var elementsByQueryAll = document.querySelectorAll("ul li");
+        elementsByQueryAll.forEach(function (element, index) {
+          element.innerText = "Item " + (index + 1) + " updated";
+        });
+      });
+    </script>
+  </body>
+</html>

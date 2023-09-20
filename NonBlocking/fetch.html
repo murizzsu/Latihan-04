@@ -1,0 +1,78 @@
+<!-- Fetch API
+Fetch API adalah API baru untuk melakukan AJAX
+Tidak seperti AJAX yang menggunakan Callback, Fetch API menggunakan Promise, sehingga kita bisa mudah menggunakan Fetch API dibanding AJAX
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+fetch(url, config) //config berisi header, method, body response dll. fetch akan mengembalikan promise. untuk lebih detailnya bisa buka link diatas
+	.then(function(response){
+		// do something here
+	})
+	.catch(function(error){	
+		// do something here
+	}); -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Fetch API</title>
+    <script>
+      function getProductsUrl(keyword) {
+        return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
+      }
+
+      function getProducts(keyword) {
+        // Code Fetch API Here!
+        const url = getProductsUrl(keyword);
+        return fetch(url, { // mengembalikan promise
+          method: "GET",
+        }).then(function (response) {
+          return response.json();
+        });
+      }
+
+      function clearProducts() {
+        const productUl = document.getElementById("products");
+        productUl.textContent = "";
+      }
+
+      function displayProducts(data) {
+        data.data.products.forEach((product) => displayProduct(product));
+      }
+
+      function displayProduct(product) {
+        const productLi = document.createElement("li");
+        productLi.textContent = product.name;
+
+        const productUl = document.getElementById("products");
+        productUl.appendChild(productLi);
+      }
+
+      function buttonClick() {
+        const promise = getProducts(document.getElementById("keyword").value);
+        // console.log(promise)
+        promise
+          .then(function (value) {
+            console.log(value);
+            return value.data.products; //jika ingin menambahkan then, maka return terlebih dahuu, karena jika tidak output akan undefined
+          })
+          .then(function (products) {
+            console.log(products);
+            products.forEach(function (product) {
+              displayProduct(product);
+            });
+          })
+          .catch(function (error) {
+            // output sukses menggunakan then dan error menggunakan catch
+            alert(error.message);
+          })
+          .finally(() => console.log("selesai memperoses promise"));
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="keyword" />
+    <button onclick="buttonClick()">Search Products</button>
+    <ul id="products"></ul>
+  </body>
+</html>

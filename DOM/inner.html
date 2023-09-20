@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="myHeading">Ini adalah Teks Utama</h1>
+    <p id="myParagraph">Teks ini akan diganti oleh JavaScript.</p>
+
+    <button id="changeTextButton">Ganti Teks</button>
+
+    <script>
+      var element = document.getElementById("myElement");
+      var htmlContent = element.innerHTML; // Mengambil konten HTML
+      element.innerHTML = "<p>Baru</p>"; // Mengganti konten HTML
+
+      var element = document.getElementById("myElement");
+      var textContent = element.innerText; // Mengambil teks
+      element.innerText = "Teks Baru"; // Mengganti teks
+
+      var inputElement = document.getElementById("myInput");
+      var value = inputElement.value; // Mengambil nilai input
+      inputElement.value = "Nilai Baru"; // Mengganti nilai input
+
+      // textcontent
+      // mengambil text
+      var myElement = document.getElementById("myElement");
+      var textContent = myElement.textContent; // Mengambil teks dari elemen
+      //mengganti text
+      var myElement = document.getElementById("myElement");
+      myElement.textContent = "Teks Baru"; // Mengganti teks dalam elemen
+      // akses ke semua text element
+      var myElement = document.getElementById("myElement");
+      var allTextContent = myElement.textContent; // Mengambil semua teks dalam elemen
+
+      // Fungsi untuk mengganti teks pada klik tombol
+      function changeText() {
+        // Mengambil elemen dengan id "myParagraph"
+        var paragraph = document.getElementById("myParagraph");
+
+        // Mengganti teks dalam elemen tersebut
+        paragraph.textContent = "Teks telah diganti oleh JavaScript!";
+      }
+
+      // Menambahkan event listener ke tombol
+      var changeTextButton = document.getElementById("changeTextButton");
+      changeTextButton.addEventListener("click", changeText);
+    </script>
+  </body>
+</html>

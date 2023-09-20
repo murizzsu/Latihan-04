@@ -1,0 +1,162 @@
+<!-- // AJAX = Asyncronous Javascript and XML
+// AJAX dapat digunakan untuk untuk mengambil data dari server setelah halaman web tampil
+// dapat digunakan untuk mengubah tampilan web tanpa harus meload ulang web
+// ajax dapat mengirim data ke server secara async di background -->
+
+<!-- Membuat AJAX
+const ajax - new XMLHttpRequest()
+ajax.open("Method", "url")
+ajax.send() -->
+
+
+<!-- AJAX biasanya digunakan untuk mengirim data ke Server atau menerima data dari Server
+Tiap request AJAX yang dilakukan, biasanya kita ingin mendapat informasi response yang diberikan oleh Server
+Kita tidak bisa langsung mengambil response AJAX, karena proses AJAX adalah Async, sehingga kita perlu menunggu sampai proses Async nya selesai.
+Untuk mendapatkan informasi AJAX, kita bisa menggunakan AJAX Callback, yang akan dieksekusi setelah proses AJAX selesai -->
+
+<!-- Membuat Ajax callback
+const ajax = new XMLHttpRequest()
+ajax.onload = function(){
+    const response = ajax.responseText
+}
+ajax.open("Method", "url")
+ajax.send() -->
+
+
+<!-- Ajax error callback
+AJAX adalah proses komunikasi Client dan Server
+Dalam komunikasi Client dan Server, kita tidak bisa selalu menganggap proses tersebut akan berjalan lancar.
+Akan ada banyak hal-hal yang bisa mengganggu proses AJAX yang bisa menyebabkan error, seperti; koneksi internet bermasalah, error dari server, data dari client tidak valid, dan lain-lain.
+Hal-hal error seperti ini perlu ditangani pada kode program kita. Dan kita bisa menggunakan Error Callback di AJAX -->
+
+<!-- const ajax = new XMLHttpRequest()
+ajax.onload = function(){
+    if(ajax.status === 200){
+        const response = ajax.responseText
+    }else{
+        error handler here
+    }
+} -->
+
+<!-- Dynamic Callback
+Kadang dalam membuat program JavaScript, kita ingin membuat callback yang dinamis.
+Bisa berubah-ubah sesuai kebutuhan kita
+Untuk membuat Dynamic Callback, kita bisa memanfaatkan function as argument di JavaScript, dimana callback function nya kita masukkan dalam argument, sehingga bisa diubah sesuai dengan keinginan kita -->
+
+<!-- Promise
+Promise merupakan proxy untuk sebuah nilai di masa depan (Future) yang belum diketahui saat pembuatan Promise tersebut.
+Biasa Promise digunakan sebagai proxy untuk proses Async.
+Penggunaan Promise sangat mudah, dan lebih mirip dengan kode Synchronous.
+
+Promis State
+state = pending, fulfilled, rejected
+result = undefined, value, error -->
+
+<!-- Membuat Promise 
+    const promise = new Promise(function(resolve,reject)){
+    if(success){
+        resolve(value) // resolve berupa function
+    }else{
+        reject(error)
+    }
+} -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX</title>
+    <script>
+        function getProductsUrl(keyword) {
+            return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
+        }
+
+        function getProducts(keyword, callbackSuccess, callbackError) {
+            // Code AJAX Here!
+            const ajax = new XMLHttpRequest()
+            ajax.onload = function(){  // ajax callback
+                if(ajax.status === 200){
+                    const data = JSON.parse(ajax.responseText)
+                    callbackSuccess(data)
+                }else{
+                    callbackError()
+                }
+            }
+            const url = getProductsUrl(keyword)
+            ajax.open("GET", url)
+            ajax.send()
+
+            // ajax tidak bisa dilakukan secara sync
+            // const response = JSON.parse(ajax.responseText)
+            // console.log(response)
+
+
+        }
+
+        function getProductsError(){
+            console.log("error get products")
+            alert("error get product")
+        }
+        function clearProducts() {
+            const productUl = document.getElementById("products");
+            productUl.textContent = "";
+        }
+
+        function displayProducts(data) {
+            data.data.products.forEach(product => displayProduct(product));
+        }
+
+        function displayProduct(product) {
+            const productLi = document.createElement("li");
+            productLi.textContent = product.name;
+
+            const productUl = document.getElementById("products");
+            productUl.appendChild(productLi);
+        }
+
+        function clearTableProducts() {
+            const productUl = document.getElementById("table-products");
+            productUl.textContent = "";
+        }
+
+        function displayTableProducts(data) {
+            const table = document.createElement("table");
+            table.setAttribute("border", 1);
+
+            let index = 0;
+            data.data.products.forEach(product => {
+                table.insertRow(index).insertCell(0).innerText = product.name;
+                index++;
+            });
+
+            const tableProduct = document.getElementById("table-products");
+            tableProduct.appendChild(table);
+        }
+
+        function buttonClick() {
+            //tampilan list
+            getProducts(document.getElementById("keyword").value, function(data){
+                clearProducts()
+                displayProducts(data)
+            }, function(){
+                getProductsError()
+            });
+
+            //table
+            getProducts(document.getElementById("keyword").value, function(data){
+               clearTableProducts
+                displayTableProducts(data)
+            }, function(){
+                getProductsError()
+            });
+            console.log("Success Click Button") // mengecek async
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="keyword">
+<button onclick="buttonClick()">Search Products</button>
+<ul id="products"></ul>
+<div id="table-products"></div>
+</body>
+</html>

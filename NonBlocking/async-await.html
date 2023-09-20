@@ -1,0 +1,115 @@
+<!-- Async Await
+Async Await adalah fitur baru JavaScript yang digunakan untuk mempermudah proses pembuatan code Promise.
+Dengan menggunakan Async Await, kita bisa membuat kode Asynchronous dengan gaya Synchronous
+Async digunakan untuk menandakan bahwa Function tersebut adalah Async, dan mengembalikan Promise
+Await digunakan untuk mendapatkan value hasil dari Function yang mengembalikan Promise.
+Await hanya bisa digunakan dalam Async Function -->
+<!-- async function onSearch(keyword){
+	const products = await searchProducts(keyword);
+	clearProducts();
+	displayProducts(products);
+} -->
+
+<!-- Async Await Error handler
+Pada Callback dan Promise, ada mekanisme Error Handler yang bisa dilakukan. Bagaimana dengan Async Await?
+Pada Async Await, kita bisa menggunakan gara Synchronous untuk menggunakan Error Handler nya, yaitu menggunakan try-catch dan try-catch-finally -->
+<!-- async function onSearch(keyword){
+	try{
+		const products = await searchProducts(keyword);
+		clearProducts();
+		displayProducts(products);
+	}catch(error){
+	}finally{
+	}
+} -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Async Await</title>
+    <script>
+      function getProductsUrl(keyword) {
+        return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
+      }
+
+      function getProducts(keyword) {
+        return new Promise(function (resolve, reject) {
+          const ajax = new XMLHttpRequest();
+          ajax.onload = function () {
+            if (ajax.status === 200) {
+              const data = JSON.parse(ajax.responseText);
+              resolve(data);
+            } else {
+              reject(Error("Error mengambil data product"));
+            }
+          };
+          ajax.open("GET", getProductsUrl(keyword));
+          ajax.send();
+        });
+      }
+
+      function clearProducts() {
+        const productUl = document.getElementById("products");
+        productUl.textContent = "";
+      }
+
+      function displayProducts(data) {
+        data.data.products.forEach((product) => displayProduct(product));
+      }
+
+      function displayProduct(product) {
+        const productLi = document.createElement("li");
+        productLi.textContent = product.name;
+
+        const productUl = document.getElementById("products");
+        productUl.appendChild(productLi);
+      }
+
+      async function buttonClick() {
+        // dengan menambahahkan async maka function merupakan asyncronous dan mengmbalikan promise
+        // Code Async Await Here!
+        //BEFORE
+        // const promise = getProducts(document.getElementById("keyword").value);
+        // // console.log(promise)
+        // promise
+        //   .then(function (value) {
+        //     console.log(value);
+        //     return value.data.products; //jika ingin menambahkan then, maka return terlebih dahuu, karena jika tidak output akan undefined
+        //   })
+        //   .then(function (products) {
+        //     console.log(products);
+        //     products.forEach(function (product) {
+        //       displayProduct(product);
+        //     });
+        //   })
+        //   .catch(function (error) {
+        //     // output sukses menggunakan then dan error menggunakan catch
+        //     alert(error.message);
+        //   })
+        //   .finally(() => console.log("selesai memperoses promise"));
+
+        // AFTER
+        try {
+          const value = await getProducts(
+            document.getElementById("keyword").value
+          ); // dengan menggunakan async await program akan dijalankan seperti kode diatas
+          const products = value.data.products;
+          clearProducts();
+          products.forEach(function (product) {
+            displayProduct(product);
+          });
+        } catch (error) {
+          alert(error.message);
+        } finally {
+          console.log("selesai memeroses async await");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <input type="text" id="keyword" />
+    <button onclick="buttonClick()">Search Products</button>
+    <ul id="products"></ul>
+  </body>
+</html>
